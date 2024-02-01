@@ -1,6 +1,6 @@
 # sam-unit-test-app
 
-Devepment Notes:
+**Devepment Notes**
 
 Generate S3 Event which can be used to test in local. 
 
@@ -63,7 +63,7 @@ npm i cross-env
 * Able to debug successfully in VS Code. 
  
 
-
+# SAM Template Notes
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.
 
 - hello-world - Code for the application's Lambda function.
