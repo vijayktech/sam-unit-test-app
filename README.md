@@ -56,6 +56,15 @@ To work above NODE_OPTIONS commnad install **cross-env**
 ```
 npm i cross-env
 ```
+* Create a **jest.config.mjs** file as same directory as Package.json file.
+* Create a **babel.config.json** for babel configuration as same above directory. 
+Which helpful for transform the JS to compatability to Jest framework. 
+
+* Install below Babel packages.     
+```
+npm i babel-jest @babel/preset-env
+```
+
 
 **Regard issue #3**, Jest mocking is not supported even after configure Jest. So Jest provided work around for it and used the same. 
  
