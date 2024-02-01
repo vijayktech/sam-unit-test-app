@@ -1,5 +1,69 @@
 # sam-unit-test-app
 
+Devepment Notes:
+
+Generate S3 Event which can be used to test in local. 
+
+```
+sam local generate-event s3 put --bucket MyS3Bucket --key employees.json > events\s3-event.json
+```
+
+Test Lambda in local using generated event.
+
+```
+sam local invoke -e events\s3-event.json HelloWorldFunction
+```
+
+# This Project is created for below Purpose.
+
+**Implementation details**
+
+I have created a new aws lambda with node js using SAM CLI. 
+sam cli creates by default lambda handler with mjs file extension for Node JS. 
+ 
+* **mjs is module java script**, which is part of ECMAScript module. 
+
+* Change **type="module"** in package.json to support ECMAScript Module. Unless it is treated as  **Common JS**
+ 
+In this mjs file, faced couple more issues as below. 
+ 1. aws-sdk version 2 is not supported.
+ 2. Testing framework which is Jest is not supporting by default
+ 3. Jest mock is not supported even after Jest configured. 
+
+I fixed those issues.
+**Regard issue #1** , upgraded to aws-sdk version 3 and changed syntax as per ECMA Script module. 
+* Import should use for ESM and use AWS SDK V3 is @aws-sdk/client-s3.
+
+```
+import { S3Client } from '@aws-sdk/client-s3';
+```
+ 
+**Regard issue #2**, created jest.config.js and provided need configuration in it.  
+and used Babel for transformation code to Jest compatability Js.
+
+set NODE_OPTIONS=--experimental-vm-modules support the test module in Jest framework. 
+
+* package.json
+```
+ "scripts": {
+    "test": "set NODE_OPTIONS=--experimental-vm-modules && jest"
+  },
+
+```
+
+To work above NODE_OPTIONS commnad install **cross-env** 
+
+```
+npm i cross-env
+```
+
+**Regard issue #3**, Jest mocking is not supported even after configure Jest. So Jest provided work around for it and used the same. 
+ 
+* After all changes it is working fine Lambda handler and Jest Test cases. 
+* Able to debug successfully in VS Code. 
+ 
+
+
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.
 
 - hello-world - Code for the application's Lambda function.
